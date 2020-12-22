@@ -1,0 +1,32 @@
+Package: seqhelp
+Title: Utilities for DNA Sequence Manipulation
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Chris",
+           family = "Hollenbeck",
+           role = c("aut", "cre"),
+           email = "chollenbeck07@gmail.com",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: Provides miscellaneous functions for manipulating DNA sequences using tidy principles
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports:
+  attempt,
+  Biostrings,
+  dplyr,
+  IRanges,
+  glue,
+  magrittr,
+  purrr,
+  readr,
+  rlang,
+  Rsamtools,
+  seqinr,
+  stringr,
+  tibble,
+  tidyr
+Suggests: 
+    testthat (>= 2.1.0)
+RoxygenNote: 7.1.1
+biocViews:
