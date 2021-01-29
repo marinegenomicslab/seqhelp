@@ -68,8 +68,7 @@ run_primer3 <- function(seq,
   }
 
   if (! is.null(settings)) {
-    settings %>%
-      purrr::walk2(names(.), ., function(x, y) {
+      purrr::walk2(settings, names(.), ., function(x, y) {
         readr::write_lines(sprintf("%s=%s", x, y), primer3_input, append = TRUE)
     })
   }
@@ -92,17 +91,16 @@ run_primer3 <- function(seq,
   summary_tbl <- primer_res[1:summary_row_end,]
   primer_tbl_long <- primer_res[(summary_row_end + 1):nrow(primer_res),]
 
-  # Convert the primer data frame to a format with one row per primer pair and clean up
-  primer_tbl_wide <- primer_tbl_long %>%
-    tidyr::extract(param, "pair_idx", regex = "_(\\d+)", remove = FALSE) %>%
-    dplyr::filter(!is.na(pair_idx)) %>%
-    dplyr::mutate(col = stringr::str_replace_all(param, "_\\d+_", "_")) %>%
-    dplyr::mutate(col = stringr::str_replace_all(col, "_\\d+", "")) %>%
-    tidyr::pivot_wider(names_from = col, values_from = value, id_cols = pair_idx) %>%
-    tidyr::extract(PRIMER_LEFT, c("PRIMER_LEFT_START", "PRIMER_LEFT_LENGTH"), "(\\d+),(\\d+)") %>%
-    tidyr::extract(PRIMER_RIGHT, c("PRIMER_RIGHT_START", "PRIMER_RIGHT_LENGTH"), "(\\d+),(\\d+)") %>%
-    dplyr::mutate(seq_name = seq_name) %>%
-    dplyr::select(seq_name, rank = pair_idx, dplyr::everything())
+  # Convert the primer data frame to a format with one row per primer pair and clean it up
+  primer_tbl_wide <- tidyr::extract(primer_tbl_long, param, "pair_idx", regex = "_(\\d+)", remove = FALSE)
+  primer_tbl_wide <- dplyr::filter(primer_tbl_wide, !is.na(pair_idx))
+  primer_tbl_wide <- dplyr::mutate(primer_tbl_wide, col = stringr::str_replace_all(param, "_\\d+_", "_"))
+  primer_tbl_wide <- dplyr::mutate(primer_tbl_wide, col = stringr::str_replace_all(col, "_\\d+", ""))
+  primer_tbl_wide <- tidyr::pivot_wider(primer_tbl_wide, names_from = col, values_from = value, id_cols = pair_idx)
+  primer_tbl_wide <- tidyr::extract(primer_tbl_wide, PRIMER_LEFT, c("PRIMER_LEFT_START", "PRIMER_LEFT_LENGTH"), "(\\d+),(\\d+)")
+  primer_tbl_wide <- tidyr::extract(primer_tbl_wide, PRIMER_RIGHT, c("PRIMER_RIGHT_START", "PRIMER_RIGHT_LENGTH"), "(\\d+),(\\d+)")
+  primer_tbl_wide <- dplyr::mutate(primer_tbl_wide, seq_name = seq_name)
+  primer_tbl_wide <- dplyr::select(primer_tbl_wide, seq_name, rank = pair_idx, dplyr::everything())
 
   return(list(summary = summary_tbl, results = primer_tbl_wide))
 
