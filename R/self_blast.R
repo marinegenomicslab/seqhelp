@@ -34,7 +34,7 @@ self_blast <- function(seq, id, conda_env = CONDA_ENV, conda_sh_path = CONDA_PAT
   blast_results <- read_blast(tmp_out)
 
   # Remove self-hits and sort by bitscore
-  blast_results <- dplyr::filter(blast_results, .data$qseqid != .data$sseqid) %>%
+  blast_results <- dplyr::filter(blast_results, .data$qseqid != .data$sseqid)
   blast_results <- dplyr::arrange(blast_results, dplyr::desc(.data$bitscore))
 
   # Return the BLAST results
