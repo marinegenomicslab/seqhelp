@@ -76,7 +76,7 @@ run_primer3 <- function(seq,
   readr::write_lines("=", primer3_input, append = TRUE)
 
   # Run Primer3
-  try(system(glue::glue("{src} {primer3_input} -p3_settings_file {primer3_output} > {primer3_output}")))
+  try(system(glue::glue("{src} {primer3_input} -p3_settings_file {primer3_settings} > {primer3_output}")))
 
   # Read in the output
   primer_res <- readr::read_delim(primer3_output, delim = '=', col_names = c("param", "value"), col_types = readr::cols())
