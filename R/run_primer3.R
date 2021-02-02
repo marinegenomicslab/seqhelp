@@ -2,10 +2,10 @@
 #'
 #' @param seq A character string containing the sequence
 #' @param seq_name The name of the sequence
+#' @param target_string String to identify the target - takes the form "target,length"
 #' @param amplicon_length Vector of length three with (min, opt, max) of amplicon product size
 #' @param melting_temp Vector of length three with (min, opt, max) of melting temperature (Tm)
 #' @param primer_length Vector of length three with (min, opt, max) of primer length
-#' @param target_string String to identify the target - takes the form "target,length"
 #' @param settings_file Optional path to a file of predetermined settings
 #' @param settings Optional named list of additional settings
 #'

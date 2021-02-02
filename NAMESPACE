@@ -3,6 +3,7 @@
 export("%>%")
 export(extend_seq_range)
 export(fetch_seq)
+export(find_snp_targets)
 export(read_blast)
 export(read_fasta)
 export(run_primer3)
