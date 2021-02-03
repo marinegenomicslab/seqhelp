@@ -21,7 +21,7 @@ find_snp_targets <- function(df, span = 60) {
     vec <- x$pos
 
     if (length(vec) == 1) {
-      return(tibble::tibble(seq_name = seq_id, target = paste(vec[1], "1", sep = ",")))
+      return(tibble::tibble(seq_name = seq_id, target = paste(vec[1], "1", sep = ","), snps = list(vec)))
     }
 
     res <- data.frame(vec = NULL, size = NULL, count = NULL)
@@ -37,7 +37,7 @@ find_snp_targets <- function(df, span = 60) {
     chosen_range <- res$size[1]
 
     string <- paste(chosen_vec[1], chosen_range, sep = ",")
-    return(tibble::tibble(seq_name = seq_id, target = string))
+    return(tibble::tibble(seq_name = seq_id, target = string, snps = list(chosen_vec)))
 
   })
 
