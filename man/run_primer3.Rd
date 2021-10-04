@@ -5,20 +5,19 @@
 \title{Design primers for a sequence}
 \usage{
 run_primer3(
-  seq,
-  seq_name,
+  df,
   amplicon_length = c(110, 150, 190),
   melting_temp = c(60, 60, 65),
   primer_length = c(20, 20, 25),
-  target_string = NULL,
   settings_file = NULL,
   settings = NULL
 )
 }
 \arguments{
-\item{seq}{A character string containing the sequence}
-
-\item{seq_name}{The name of the sequence}
+\item{df}{A dataframe with at least the following columns: seq, seq_name, target_string
+seq: A character string containing the sequence
+seq_name: The name of the sequence
+target_string: String to identify the target region - takes the form "target,length"}
 
 \item{amplicon_length}{Vector of length three with (min, opt, max) of amplicon product size}
 
@@ -26,14 +25,12 @@ run_primer3(
 
 \item{primer_length}{Vector of length three with (min, opt, max) of primer length}
 
-\item{target_string}{String to identify the target - takes the form "target,length"}
-
 \item{settings_file}{Optional path to a file of predetermined settings}
 
 \item{settings}{Optional named list of additional settings}
 }
 \value{
-A list containing two data frames (a summary table and a results table)
+
 }
 \description{
 Design primers for a sequence

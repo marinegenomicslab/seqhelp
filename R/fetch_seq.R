@@ -25,7 +25,7 @@ fetch_seq <- function(accession = NULL, fasta = NULL, seq_name = NULL, seq_start
     names(irange_list) <- seq_name
     faidx <- Rsamtools::FaFile(fasta)
     grange <- Rsamtools::scanFa(faidx, param = irange_list)
-    seq <- as.character(grange$seq)
+    seq <- unname(as.character(grange))
   }
 
 
